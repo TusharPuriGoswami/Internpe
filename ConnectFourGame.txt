@@ -33,16 +33,13 @@ public class ConnectFourGame
             boolean gameEnded = false;
 
             while (!gameEnded) {
-                // Print current board
+     
                 printBoard();
-
-                // Get current player's move
+              
                 int col = getPlayerMove(scanner);
-
-                // Drop player's piece into the board
+               
                 dropPiece(col);
-
-                // Check if current player wins
+              
                 if (checkWin()) {
                     printBoard();
                     System.out.println("Player " + (player1Turn ? "1" : "2") + " wins!");
@@ -53,7 +50,6 @@ public class ConnectFourGame
                     gameEnded = true;
                 }
 
-                // Switch turns
                 player1Turn = !player1Turn;
             }
 
