@@ -1,0 +1,117 @@
+package com.Internpe;
+
+import java.util.Scanner;
+
+public class ConnectFourGame
+
+     {
+        private static final int ROWS = 6;
+        private static final int COLUMNS = 7;
+        private static final char EMPTY = ' ';
+        private static final char PLAYER1 = 'X';
+        private static final char PLAYER2 = 'O';
+
+        private char[][] board;
+        private boolean player1Turn;
+
+        public ConnectFourGame() {
+            board = new char[ROWS][COLUMNS];
+            player1Turn = true;
+            initializeBoard();
+        }
+
+        private void initializeBoard() {
+            for (int row = 0; row < ROWS; row++) {
+                for (int col = 0; col < COLUMNS; col++) {
+                    board[row][col] = EMPTY;
+                }
+            }
+        }
+
+        public void playGame() {
+            Scanner scanner = new Scanner(System.in);
+            boolean gameEnded = false;
+
+            while (!gameEnded) {
+                // Print current board
+                printBoard();
+
+                // Get current player's move
+                int col = getPlayerMove(scanner);
+
+                // Drop player's piece into the board
+                dropPiece(col);
+
+                // Check if current player wins
+                if (checkWin()) {
+                    printBoard();
+                    System.out.println("Player " + (player1Turn ? "1" : "2") + " wins!");
+                    gameEnded = true;
+                } else if (boardFull()) {
+                    printBoard();
+                    System.out.println("It's a draw!");
+                    gameEnded = true;
+                }
+
+                // Switch turns
+                player1Turn = !player1Turn;
+            }
+
+                 }
+
+        private void printBoard() {
+            System.out.println(" 1 2 3 4 5 6 7");
+            System.out.println("---------------");
+            for (int row = 0; row < ROWS; row++) {
+                for (int col = 0; col < COLUMNS; col++) {
+                    System.out.print("|" + board[row][col]);
+                }
+                System.out.println("|");
+            }
+            System.out.println("---------------");
+        }
+
+        private int getPlayerMove(Scanner scanner) {
+            int col;
+            while (true) {
+                System.out.print("Player " + (player1Turn ? "1" : "2") + ", enter column number (1-7): ");
+                col = scanner.nextInt() - 1; // Adjust to 0-based index
+
+                if (col >= 0 && col < COLUMNS && board[0][col] == EMPTY) {
+                    break;
+                } else {
+                    System.out.println("Invalid move. Please try again.");
+                }
+            }
+            return col;
+        }
+
+        private void dropPiece(int col) {
+            for (int row = ROWS - 1; row >= 0; row--) {
+                if (board[row][col] == EMPTY) {
+                    board[row][col] = player1Turn ? PLAYER1 : PLAYER2;
+                    break;
+                }
+            }
+        }
+
+        private boolean checkWin() {
+            // TODO: Implement win checking logic
+            return false;
+        }
+
+        private boolean boardFull() {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (board[0][col] == EMPTY) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static void main(String[] args) {
+            ConnectFourGame game = new ConnectFourGame();
+
+            game.playGame();
+        }
+        }
