@@ -1,4 +1,4 @@
-package com.codsoft;
+package com.internpe;
 
 import java.util.Scanner;
  class BankAccount {
